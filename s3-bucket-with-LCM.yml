@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: gova.bucket2
+      AccessControl: Private
+      LifecycleConfiguration:
+        Rules:
+          - Id: gova-demo
+            Prefix: glacier
+            Status: Enabled
+            ExpirationInDays: 30
+            Transitions:
+              - StorageClass: GLACIER
+                TransitionInDays: 15
+
+Outputs:
+  S3BucketName:
+    Description: Name of the created S3 bucket
+    Value: !Ref MyS3Bucket
